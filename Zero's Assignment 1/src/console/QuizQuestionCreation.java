@@ -14,10 +14,11 @@ import Questions.TrueFalse;
  */
 
 /**
- * @author Hanchen (Zero) Liu
- * @version 1.0
  * This is the TrueFalse class that extends from the Question class
  * and creates a true false question object
+ *
+ * @author Hanchen (Zero) Liu
+ * @version 1.0
  */
 public class QuizQuestionCreation
 {

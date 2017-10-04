@@ -9,11 +9,11 @@ package Questions;
  */
 
 /**
- * @author Hanchen (Zero) Liu
- * @version 1.0
- *
  * This is the MultipleChoice class that extends from the Question class
  * and creates a multiple choice question object
+ *
+ * @author Hanchen (Zero) Liu
+ * @version 1.0
  */
 public class MultipleChoice extends Question
 {

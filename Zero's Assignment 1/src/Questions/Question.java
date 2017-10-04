@@ -8,10 +8,10 @@ package Questions;
  */
 
 /**
+ * This is the Question class that creates a question object
+ *
  * @author Hanchen (Zero) Liu
  * @version 1.0
- *
- * This is the Question class that creates a question object
  */
 public abstract class Question
 {
