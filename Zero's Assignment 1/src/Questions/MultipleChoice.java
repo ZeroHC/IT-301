@@ -1,10 +1,36 @@
 package Questions;
 
+/*
+ * Hanchen (Zero) Liu
+ * 10/03/2017
+ * MultipleChoice.java
+ * This is the MultipleChoice class that extends from the Question class
+ * and creates a multiple choice question object
+ */
+
+/**
+ * @author Hanchen (Zero) Liu
+ * @version 1.0
+ *
+ * This is the MultipleChoice class that extends from the Question class
+ * and creates a multiple choice question object
+ */
 public class MultipleChoice extends Question
 {
+    //takes a string array to store available options
     private String[] options;
+
+    //takes an int to store the correct answer
     private int answer;
 
+    /**
+     * Creates a multiple choice question with a description,
+     * a list of options, and the answer
+     *
+     * @param message question description
+     * @param options list of options
+     * @param answer question answer
+     */
     public MultipleChoice(String message, String[] options, int answer)
     {
         super(message);
@@ -13,21 +39,42 @@ public class MultipleChoice extends Question
         this.answer = answer;
     }
 
+    /**
+     * Generates a question with a description,
+     * a list of options and the answer
+     *
+     * @return the question description and the answer
+     */
     @Override
     public String generateQuestion()
     {
-        String temp = "";
+        //use string builder to improve performance
+        StringBuilder tempSB = new StringBuilder();
+
         for (int i = 0; i < options.length; i++)
         {
-            temp = temp + "\n" + (i + 1) + " " + options[i];
+            tempSB.append("\n")
+                    .append(i + 1)
+                    .append(". ")
+                    .append(options[i]);
         }
-        return getMessage() + temp + "\n\nanswer: " + options[answer - 1];
+
+        return new StringBuilder().append(getMessage())
+                .append(tempSB)
+                .append("\n\nanswer: ")
+                .append(options[answer - 1])
+                .toString();
     }
 
+    /**
+     * check user's choice with the stored answer to see if user is correct
+     *
+     * @param choice user's choice
+     * @return true if user's choice is the same as the stored answer otherwise false
+     */
     @Override
     public boolean isAnswer(int choice)
     {
-        if (choice == answer) return true;
-        else return false;
+        return choice == answer;
     }
 }
