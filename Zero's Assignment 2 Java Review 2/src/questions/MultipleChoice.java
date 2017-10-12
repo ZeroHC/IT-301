@@ -1,4 +1,4 @@
-package Questions;
+package questions;
 
 /*
  * Hanchen (Zero) Liu
@@ -63,6 +63,7 @@ public class MultipleChoice extends Question
                 .append(tempSB)
                 .append("\n\nanswer: ")
                 .append(options[answer - 1])
+                .append("\n")
                 .toString();
     }
 

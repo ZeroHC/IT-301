@@ -1,4 +1,4 @@
-package Questions;
+package questions;
 
 /*
  * Hanchen (Zero) Liu

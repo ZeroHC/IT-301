@@ -1,0 +1,24 @@
+Lake Superior is the largest fresh water lake in the world.
+1. false
+2. true 
+
+answer: true
+
+Which of the following is the seventh planet from the sun?
+1. Earth
+2. Neptune
+3. Mercury
+4. Uranus
+
+answer: Uranus
+
+Which of the following are considered European countries?
+1. Spain
+2. France
+3. Mongolia
+4. Sweden
+
+answer: Spain
+answer: France
+answer: Sweden
+

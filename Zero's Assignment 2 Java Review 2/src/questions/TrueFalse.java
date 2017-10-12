@@ -1,4 +1,4 @@
-package Questions;
+package questions;
 
 /*
  * Hanchen (Zero) Liu
@@ -43,6 +43,7 @@ public class TrueFalse extends Question
         return new StringBuilder().append(getMessage())
                                     .append("\n1. false\n2. true \n\nanswer: ")
                                     .append(answer)
+                                    .append("\n")
                                     .toString();
     }
 

@@ -1,9 +1,9 @@
 package console;
 
-import Questions.MultipleAnswers;
-import Questions.MultipleChoice;
-import Questions.Question;
-import Questions.TrueFalse;
+import questions.MultipleAnswers;
+import questions.MultipleChoice;
+import questions.Question;
+import questions.TrueFalse;
 
 /*
  * Hanchen (Zero) Liu
