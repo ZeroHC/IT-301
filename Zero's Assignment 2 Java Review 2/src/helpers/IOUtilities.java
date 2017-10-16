@@ -69,37 +69,22 @@ public class IOUtilities
 
         //if the user wants to show answers
         //add answers to the output StringBuilder
-        if (showAnswer)
+        while ((lineReader = fileReader.readLine()) != null)
         {
-            while ((lineReader = fileReader.readLine()) != null)
+            String trimmedLine = lineReader.trim();
+            if (!showAnswer && trimmedLine.startsWith("answer"))
             {
-                questionBuilder.append(lineReader)
-                                .append("\n");
-            }
-            return questionBuilder.toString();
-        }
-
-        //if the user doesn't want to show answers
-        //hide answers
-        else
-        {
-            while ((lineReader = fileReader.readLine()) != null)
-            {
-                String trimmedLine = lineReader.trim();
-                if (!trimmedLine.startsWith("answer"))
-                {
-                    questionBuilder.append(lineReader)
-                            .append("\n");
-                }
-
                 questionBuilder.append("");
             }
 
-            //close the file
-            fileReader.close();
-
-            //return the lists of questions
-            return questionBuilder.toString();
+            else questionBuilder.append(lineReader)
+                                .append("\n");
         }
+
+        //close the file
+        fileReader.close();
+
+        //return the lists of questions
+        return questionBuilder.toString();
     }
 }

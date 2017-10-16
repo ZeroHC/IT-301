@@ -31,6 +31,9 @@ public class CreationConsole
     //initialize a global scanner for user input
     private static final Scanner INPUT_SCANNER = new Scanner(System.in);
 
+    //initialize the menu choice
+    private static int menuChoice;
+
     /**
      * This is the main method that helps user to create quiz, show existing quiz
      * or exit
@@ -45,9 +48,6 @@ public class CreationConsole
         System.out.println("**********************");
         System.out.println("This program allows you to create, save and show quizzes." +
                 " Please use the menu below.");
-
-        //initialize the menu choice
-        int menuChoice = 0;
 
         //use a while loop to show menu every time a task is complete
         while (menuChoice != 3)
@@ -79,7 +79,10 @@ public class CreationConsole
         System.out.println("2. Show quiz");
         System.out.println("3. Exit");
 
-        return INPUT_SCANNER.nextInt();
+        menuChoice = INPUT_SCANNER.nextInt();
+        INPUT_SCANNER.nextLine();
+
+        return menuChoice;
     }
 
     //this method demonstrates the quiz creation menu
