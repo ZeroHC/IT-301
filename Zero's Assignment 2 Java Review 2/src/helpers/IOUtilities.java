@@ -67,8 +67,11 @@ public class IOUtilities
         //use a string to go through file line by line
         String lineReader;
 
-        //if the user wants to show answers
-        //add answers to the output StringBuilder
+        /*
+         *  if the user wants to show answers
+         *  add answers to the output StringBuilder
+         *  else hide answers
+         */
         while ((lineReader = fileReader.readLine()) != null)
         {
             String trimmedLine = lineReader.trim();
