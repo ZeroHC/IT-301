@@ -10,8 +10,6 @@ package masking;
  * an image from the input file
  */
 
-import static driver.MaskingDriver.IMAGE_FILES;
-
 /**
  * This class works together with the
  * BinaryNumberBuilder class to display
@@ -28,14 +26,20 @@ public class DisplayImage
      * should be passed into the DisplayImage object using
      * the constructor
      */
-    private static byte[] data;
-    private static int rows;
-    private static int columns;
+    private byte[] data;
+    private int columns;
 
-    public DisplayImage(byte[] data, int rows, int columns)
+    /**
+     * Creates a DisplayImage object with a list of bytes,
+     * the number of rows of the list,
+     * the number of columns of the list
+     *
+     * @param data list of bytes
+     * @param columns number of columns of the list
+     */
+    public DisplayImage(byte[] data, int columns)
     {
         this.data = data;
-        this.rows = rows;
         this.columns = columns;
     }
 
@@ -47,13 +51,23 @@ public class DisplayImage
      */
     public void showImage(int choice)
     {
+        //create a mask based on user's choice
+        byte mask = (byte)(0b00000001 << (choice - 1));
+
+        //use a for loop to print out the target image
         for (int i = 0; i < data.length; i++)
         {
+            //line break at every 16th index
             if (i != 0 && i % columns == 0)
             {
                 System.out.print("\n");
             }
-            if (data[i] == 0)
+
+            /*
+             * if the target bit is 0, prints out a space
+             * else prints out a X
+             */
+            if ((data[i] & mask) == 0)
             {
                 System.out.print(" ");
             }
@@ -65,5 +79,4 @@ public class DisplayImage
 
         System.out.println("\n");
     }
-
 }
