@@ -101,7 +101,7 @@ public class ABCMachine
 		for (short register : registers)
 		{
 			String binaryString = Integer.toBinaryString(Short.toUnsignedInt(register));
-			binaryString = padZeroes(binaryString, NUM_REGISTERS);
+			binaryString = padZeroes(binaryString, NUM_MEMORY);
 			System.out.println(binaryString);
 		}
 	}

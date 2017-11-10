@@ -11,9 +11,19 @@ public class ControlUnit
     private static final short DESTINATION_REGISTER_MASK = 112; //000 000 000 111 0000
     private static final short ADDRESS_MASK = 15;               //000 000 000 000 1111
 
-	private ABCMachine machine;
+    private static final int OPCODE_SHIFTER = 13;
+    private static final int SOURCE_REGISTER_1_SHIFTER = 10;
+    private static final int SOURCE_REGISTER_2_SHIFTER = 7;
+    private static final int DESTINATION_REGISTER_SHIFTER = 4;
 
-	public ControlUnit(ABCMachine machine)
+    private ABCMachine machine;
+    private short opCode;
+    private short sourceRegister1;
+    private short sourceRegister2;
+    private short destinationRegister;
+    private short address;
+
+    public ControlUnit(ABCMachine machine)
 	{
 		this.machine = machine;
 	}
@@ -28,9 +38,7 @@ public class ControlUnit
          * zero in binary.
          */
 
-
         short instruction;
-        short[] instructionParts;
 
         while (true)
         {
@@ -42,9 +50,9 @@ public class ControlUnit
 
             else
             {
-                instructionParts = decode(instruction);
+                decode(instruction);
 
-                execute(instructionParts);
+                execute();
             }
         }
 	}
@@ -60,20 +68,21 @@ public class ControlUnit
     }
 
     //this method decodes the instruction code into 5 sub parts
-    private short[] decode(short instruction)
+    private void decode(short instruction)
     {
-        short opCode = (short)(instruction & OP_CODE_MASK);
-        short sourceRegister1 = (short)(instruction & SOURCE_REGISTER_1_MASK);
-        short sourceRegister2 = (short)(instruction & SOURCE_REGISTER_2_MASK);
-        short destinationRegister = (short)(instruction & DESTINATION_REGISTER_MASK);
-        short address = (short)(instruction & ADDRESS_MASK);
-
-        return new short[]{opCode, sourceRegister1, sourceRegister2, destinationRegister, address};
+        opCode = (short)((instruction & OP_CODE_MASK) >>> OPCODE_SHIFTER);
+        sourceRegister1 = (short)((instruction & SOURCE_REGISTER_1_MASK) >>> SOURCE_REGISTER_1_SHIFTER);
+        sourceRegister2 = (short)((instruction & SOURCE_REGISTER_2_MASK) >>> SOURCE_REGISTER_2_SHIFTER);
+        destinationRegister = (short)((instruction & DESTINATION_REGISTER_MASK) >>> DESTINATION_REGISTER_SHIFTER);
+        address = (short)(instruction & ADDRESS_MASK);
     }
 
     //this method executes the instruction code
-    private void execute(short[] instructionCodes)
+    private void execute()
     {
+        if (opCode != 0)
+        {
 
+        }
     }
 }
