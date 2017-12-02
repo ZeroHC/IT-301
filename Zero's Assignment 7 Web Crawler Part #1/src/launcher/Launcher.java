@@ -49,6 +49,7 @@ public class Launcher
             System.out.println("3. Add producer");
             System.out.println("4. Add keyword search");
             System.out.println("5. Print stats");
+            System.out.println("6. Informational Thread");
             System.out.println("0. Quit program");
 
             //get user's choice
@@ -71,6 +72,9 @@ public class Launcher
                     break;
 
                 case 5: printStats();
+                    break;
+
+                case 6: createInfoThread();
                     break;
 
                 case 0: return;
@@ -123,5 +127,30 @@ public class Launcher
         System.out.println("Producers: " + producerCounter);
         System.out.println("Consumers: " + consumerCounter);
         System.out.println();
+    }
+
+    //this method creates a informational thread that repeatedly prints the stats but with a 5 second delay
+    private static void createInfoThread()
+    {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run()
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Thread.sleep(5000);
+                        printStats();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        });
+
+        thread.start();
     }
 }
