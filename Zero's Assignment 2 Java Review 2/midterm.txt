@@ -1,0 +1,24 @@
+Overload occurs when redefining a method that a class inherited
+1. false
+2. true 
+
+answer: false
+
+What is the result of 10111000 >>> 3
+1. 11110111
+2. 00010111
+3. 11000000
+4. none of above
+
+answer: 00010111
+
+The PC register is also called:
+1. Registry
+2. Program Counter
+3. Instruction Pointer
+4. Instruction Address Register
+
+answer: Program Counter
+answer: Instruction Pointer
+answer: Instruction Address Register
+
