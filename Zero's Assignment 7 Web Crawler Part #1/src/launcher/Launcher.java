@@ -7,15 +7,41 @@ import queues.SharedPageQueue;
 
 import java.util.Scanner;
 
+/*
+ * Hanchen (Zero) Liu
+ * 12/01/2017
+ * Launcher.java
+ *
+ * This class is the test class for web crawler
+ */
+
+/**
+ * This class is the test class for web crawler
+ *
+ * @author Hanchen (Zero) Liu
+ * @version 1.0
+ */
 public class Launcher
 {
+    //initialize a scanner for global use
     private static Scanner inputScanner = new Scanner(System.in);
 
+    //initialize a counter for counting numbers of producers
     private static int producerCounter = 0;
+
+    //initialize a counter for counting numbers of consumers
     private static int consumerCounter = 0;
 
+    /**
+     * this is the main method that simulates threads
+     *
+     * @param args command line args
+     */
     public static void main(String[] args)
     {
+        int userChoice;
+
+        //display the menu after each action
         while (true)
         {
             System.out.println("1. Add seed url");
@@ -25,51 +51,42 @@ public class Launcher
             System.out.println("5. Print stats");
             System.out.println("0. Quit program");
 
-            int userChoice = inputScanner.nextInt();
+            //get user's choice
+            userChoice = inputScanner.nextInt();
             inputScanner.nextLine();
 
+            //base on user choice do different things
             switch (userChoice)
             {
-                case 1:
-                    addUrl();
+                case 1: addUrl();
                     break;
 
-                case 2:
-                    addConsumer();
+                case 2: addConsumer();
                     break;
 
-                case 3:
-                    addProducer();
+                case 3: addProducer();
                     break;
 
-                case 4:
-                    addKeyword();
+                case 4: addKeyword();
                     break;
 
-                case 5:
-                    printStats();
+                case 5: printStats();
                     break;
 
-                case 0:
-                    return;
+                case 0: return;
             }
         }
     }
 
+    //this method adds a seed url to the shared link queue
     private static void addUrl()
     {
-        try
-        {
-            System.out.print("\nURL: ");
-            SharedLinkQueue.addLink(inputScanner.nextLine());
-            System.out.println();
-        }
-        catch (InterruptedException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        System.out.print("\nURL: ");
+        SharedLinkQueue.addLink(inputScanner.nextLine());
+        System.out.println();
     }
 
+    //this method creates a new consumer thread and starts it
     private static void addConsumer()
     {
         Parser tempConsumer = new Parser();
@@ -78,6 +95,7 @@ public class Launcher
         System.out.println();
     }
 
+    //this method creates a new producer thread and starts it
     private static void addProducer()
     {
         Fetcher tempProducer = new Fetcher();
@@ -86,6 +104,7 @@ public class Launcher
         System.out.println();
     }
 
+    //this method adds a keyword to the list of keyword that needs to be searched
     private static void addKeyword()
     {
         System.out.print("\nKeyword: ");
@@ -93,6 +112,7 @@ public class Launcher
         System.out.println();
     }
 
+    //this methods prints out stats of the web crawler program
     private static void printStats()
     {
         System.out.println();
