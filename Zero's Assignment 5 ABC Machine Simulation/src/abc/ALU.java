@@ -14,7 +14,7 @@ package abc;
  * @author Hanchen (Zero) Liu
  * @version 1.0
  */
-class ALU
+public class ALU
 {
     //private field
     private byte nzp;
@@ -27,7 +27,7 @@ class ALU
      *
      * @return result of src1 + src2
      */
-    short add(short src1, short src2)
+    public short add(short src1, short src2)
     {
         short result = (short)(src1 + src2);
 
@@ -45,7 +45,7 @@ class ALU
      *
      * @return result of src1 - src2
      */
-    short subtract(short src1, short src2)
+    public short subtract(short src1, short src2)
     {
         short result = (short)(src1 - src2);
 
@@ -63,7 +63,7 @@ class ALU
      *
      * @return result of src1 * src2
      */
-    short multiply(short src1, short src2)
+    public short multiply(short src1, short src2)
     {
         short result = (short)(src1 * src2);
 
@@ -81,7 +81,7 @@ class ALU
      *
      * @return result of src1 / src2
      */
-    short divide(short src1, short src2)
+    public short divide(short src1, short src2)
     {
         short result = (short)(src1/src2);
 

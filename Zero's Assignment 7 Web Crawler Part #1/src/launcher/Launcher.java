@@ -140,8 +140,8 @@ public class Launcher
                 {
                     try
                     {
-                        Thread.sleep(5000);
                         printStats();
+                        Thread.sleep(5000);
                     }
                     catch (InterruptedException e)
                     {
