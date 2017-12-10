@@ -6,7 +6,7 @@ import producers.Fetcher;
 import queues.SharedLinkQueue;
 import queues.SharedPageQueue;
 
-import java.util.Scanner;
+import java.util.*;
 
 /*
  * Hanchen (Zero) Liu
@@ -20,18 +20,18 @@ import java.util.Scanner;
  * This class is the test class for web crawler
  *
  * @author Hanchen (Zero) Liu
- * @version 1.0
+ * @version 1.1
  */
 public class Launcher
 {
     //initialize a scanner for global use
     private static Scanner inputScanner = new Scanner(System.in);
 
-    //initialize a counter for counting numbers of producers
-    private static int producerCounter = 0;
+    //initialize an array list to store all the producers created
+    private static ArrayList<Fetcher> producers = new ArrayList<>();
 
-    //initialize a counter for counting numbers of consumers
-    private static int consumerCounter = 0;
+    //initialize an array list to store all the consumers created
+    private static ArrayList<Parser> consumers = new ArrayList<>();
 
     /**
      * this is the main method that simulates threads
@@ -80,7 +80,8 @@ public class Launcher
                 case 6: createInfoThread();
                     break;
 
-                case 0: return;
+                case 0: threadStopper();
+                    return;
             }
         }
     }
@@ -100,8 +101,8 @@ public class Launcher
     {
         Parser tempConsumer = new Parser();
         tempConsumer.start();
-        consumerCounter++;
-        tempConsumer.setName("Parser #" + consumerCounter);
+        consumers.add(tempConsumer);
+        tempConsumer.setName("Parser #" + consumers.size());
         MyLogger.LOGGER.warning(tempConsumer.getName() + " has started");
         System.out.println();
     }
@@ -111,8 +112,8 @@ public class Launcher
     {
         Fetcher tempProducer = new Fetcher();
         tempProducer.start();
-        producerCounter++;
-        tempProducer.setName("Fetcher #" + producerCounter);
+        producers.add(tempProducer);
+        tempProducer.setName("Fetcher #" + producers.size());
         MyLogger.LOGGER.warning(tempProducer.getName() + " has started");
         System.out.println();
     }
@@ -130,11 +131,15 @@ public class Launcher
     {
         System.out.println();
         System.out.println("Keywords found: " + Parser.getKeywordFoundCounter());
+        System.out.println();
+        System.out.println("Individual keyword counts:");
+        printIndividualCounts();
+        System.out.println();
         System.out.println("Links found: " + SharedLinkQueue.getLinksFound());
         System.out.println("Pages found: " + SharedPageQueue.getPagesDownloaded());
         System.out.println("Failed downloads: " + Fetcher.getDownloadFailedCounter());
-        System.out.println("Producers: " + producerCounter);
-        System.out.println("Consumers: " + consumerCounter);
+        System.out.println("Producers: " + producers.size());
+        System.out.println("Consumers: " + consumers.size());
         System.out.println();
     }
 
@@ -161,5 +166,45 @@ public class Launcher
         });
 
         thread.start();
+    }
+
+    //this method stops all the threads that are running
+    private static void threadStopper()
+    {
+        if (producers.size() == 0 || consumers.size() == 0)
+        {
+            return;
+        }
+        else
+        {
+            for (Fetcher tempFetcher : producers)
+            {
+                tempFetcher.stopThread();
+                MyLogger.LOGGER.warning(tempFetcher.getName() + " has been stopped!");
+            }
+            for (Parser tempParser : consumers)
+            {
+                tempParser.stopThread();
+                MyLogger.LOGGER.warning(tempParser.getName() + " has been stopped!");
+            }
+        }
+    }
+
+    //this method prints out counts for each individual keywords
+    private static void printIndividualCounts()
+    {
+        // Get a set of the entries
+        Set set = Parser.keywordAndCounter.entrySet();
+
+        // Get an iterator
+        Iterator iterator = set.iterator();
+
+        // Display elements
+        while(iterator.hasNext())
+        {
+            Map.Entry mapEntry = (Map.Entry)iterator.next();
+            System.out.print(mapEntry.getKey() + ": ");
+            System.out.println(mapEntry.getValue());
+        }
     }
 }

@@ -1,11 +1,12 @@
 package consumers;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import queues.SharedLinkQueue;
 import queues.SharedPageQueue;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
 
 /*
  * Hanchen (Zero) Liu
@@ -19,14 +20,18 @@ import java.util.regex.Pattern;
  * This class analyze each page found
  *
  * @author Hanchen (Zero) Liu
- * @version 1.0
+ * @version 1.1
  */
 public class Parser extends Thread
 {
-    //initialize an array list to store all the keywords need to be searched
-    private static ArrayList<String> keywords = new ArrayList<>();
+    //initialize an hash map to store all the keywords need to be searched as well as how many times it's been found
+    public static HashMap<String, Integer> keywordAndCounter = new HashMap<>();
+
     //initialize a counter to count how many times all keywords have been found
     private static int keywordFoundCounter = 0;
+
+    //initialize a flag for stopping thread
+    private volatile boolean done = false;
 
     /**
      * this method pulls a page from the page queue,
@@ -38,43 +43,43 @@ public class Parser extends Thread
     @Override
     public void run()
     {
-        while (true)
+        while (!done)
         {
-             //decrypt the page text
-            String pageText = SharedPageQueue.getNextPage();
+            //get a page from the shared page queue
+            Document page = SharedPageQueue.getNextPage();
 
-            //searches for more links
-            Pattern pattern = Pattern.compile("href=\"(http:.*?)\"");
-            Matcher matcher = pattern.matcher(pageText);
+            //finds all links
+            Elements links = page.select("a[href]");
 
-            while (matcher.find())
+            //add all found links to the shared link queue
+            for (Element link : links)
             {
-                String link = matcher.group(1);
-
-                //add the link to the shared link queue
-                SharedLinkQueue.addLink(link);
+                String url = link.absUrl("href");
+                SharedLinkQueue.addLink(url);
             }
 
             //look for each keywords in the page text
-            for (String keyword : keywords)
+            for (String keyword : keywordAndCounter.keySet())
             {
-                String[] parts = pageText.split(keyword);
+                String[] parts = page.text().split(keyword);
 
-                for (int i = 0; i < parts.length; i++)
-                {
-                    keywordFoundCounter++;
-                }
+                int keywordCounter = keywordAndCounter.get(keyword) + parts.length;
+
+                //updates the value
+                keywordAndCounter.put(keyword, keywordCounter);
+
+                keywordFoundCounter += parts.length;
             }
         }
     }
 
     /**
-     * this method adds a keyword to the list of keywords that need to be searched
+     * this method adds a keyword to the set of keywords that need to be searched
      * @param keyword a keyword needs to be searched
      */
     public static void addKeywords(String keyword)
     {
-        keywords.add(keyword);
+        keywordAndCounter.put(keyword, 0);
     }
 
     /**
@@ -84,5 +89,13 @@ public class Parser extends Thread
     public static int getKeywordFoundCounter()
     {
         return keywordFoundCounter;
+    }
+
+    /**
+     * this method stops a thread from running
+     */
+    public void stopThread()
+    {
+        done = true;
     }
 }

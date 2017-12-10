@@ -1,5 +1,6 @@
 package queues;
 
+import org.jsoup.nodes.Document;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,7 +16,7 @@ import java.util.Queue;
  * This class stores a linked list of strings, each of which has the text of a web document
  *
  * @author Hanchen (Zero) Liu
- * @version 1.0
+ * @version 1.1
  */
 public class SharedPageQueue
 {
@@ -23,16 +24,16 @@ public class SharedPageQueue
     private static final int MAX_QUEUE_SIZE = 50000;
 
     //initialize a queue for storing the web documents
-    private static final Queue<String> pageQueue = new LinkedList<>();
+    private static final Queue<Document> pageQueue = new LinkedList<>();
 
     //initialize a counter for counting the number of web documents
     private static int downloadedPageCounter = 0;
 
     /**
      * this method adds a web document to the page queue
-     * @param pageText a web document that needs to be added to the queue
+     * @param page a web document that needs to be added to the queue
      */
-    public static void addPage(String pageText)
+    public static void addPage(Document page)
     {
         //make sure it is thread safe
         synchronized (pageQueue)
@@ -51,7 +52,7 @@ public class SharedPageQueue
             }
 
             //add the web document to the queue
-            pageQueue.add(pageText);
+            pageQueue.add(page);
 
             downloadedPageCounter++;
 
@@ -64,7 +65,7 @@ public class SharedPageQueue
      * this method retrieves one web document from the page queue
      * @return a web document
      */
-    public static String getNextPage()
+    public static Document getNextPage()
     {
         //make sure it is thread safe
         synchronized (pageQueue)
@@ -83,7 +84,7 @@ public class SharedPageQueue
             }
 
             //pulling one web document out from the queue
-            String page = pageQueue.poll();
+            Document page = pageQueue.poll();
 
             //notify the thread that a web document has been pulled out
             pageQueue.notifyAll();
