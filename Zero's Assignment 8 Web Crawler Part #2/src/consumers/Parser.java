@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class Parser extends Thread
 {
     //initialize an hash map to store all the keywords need to be searched as well as how many times it's been found
-    public static HashMap<String, Integer> keywordAndCounter = new HashMap<>();
+    private static HashMap<String, Integer> keywordAndCounter = new HashMap<>();
 
     //initialize a counter to count how many times all keywords have been found
     private static int keywordFoundCounter = 0;
@@ -97,5 +97,14 @@ public class Parser extends Thread
     public void stopThread()
     {
         done = true;
+    }
+
+    /**
+     * this method retrieves a hash map that contains keywords and how many times its been found
+     * @return keywords and counter set
+     */
+    public static HashMap<String, Integer> getKeywordAndCounter()
+    {
+        return keywordAndCounter;
     }
 }

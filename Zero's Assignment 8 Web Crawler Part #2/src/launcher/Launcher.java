@@ -194,7 +194,7 @@ public class Launcher
     private static void printIndividualCounts()
     {
         // Get a set of the entries
-        Set set = Parser.keywordAndCounter.entrySet();
+        Set set = Parser.getKeywordAndCounter().entrySet();
 
         // Get an iterator
         Iterator iterator = set.iterator();
